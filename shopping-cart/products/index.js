@@ -1,15 +1,26 @@
 const express = require("express");
-const cors = require("cors");
+const expressApp = require('./src/express-app');
 
-const app = express();
+const startServer = async () => {
+    const app = express();
 
-app.use(cors());
-app.use(express.json());
+    await expressApp(app);
 
-app.use('/', (req, res, next) => {
-  return res.send('It works, Products');
-});
+    app.listen(7001, () => {
+        console.log("Gateway is Listening to Port 7001");
+    }).on('error', err => {
+        console.log(err);
+        process.exit();
+    });
+}
 
-app.listen(7001, () => {
-  console.log("Gateway is Listening to Port 7001");
-});
+startServer();
+
+
+// app.use(cors());
+// app.use(express.json());
+
+// app.use('/', (req, res, next) => {
+//   return res.send('It works, Products');
+// });
+
